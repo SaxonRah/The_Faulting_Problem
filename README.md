@@ -1,4 +1,5 @@
 # The Faulting Problem
+### by Robert Valentine (A.K.A. Robert Chubb)
 
 ## Conjecture:
 For any software system $S$, there exists a set $B$ of bugs and vulnerabilities such that $B$ is non-empty and $S$ cannot function without at least one element from $B$ present.
@@ -26,20 +27,28 @@ Mathematically, this can be expressed as: $∀S, ∃B$ such that $B=\\{\\}$ and 
 
 ## Coq Implementation:
 ```coq
-Variable Software : Type. (* Define the type of software *)
+Parameter Software : Type. (* Define the type of software *)
 
-Variable Bug : Software -> Prop. (* Define the predicate for bugs *)
+Parameter decides_bug : Software -> Prop. (* Predicate for deciding if software has bugs *)
 
-Definition BugFree (s : Software) := ~ Bug s. (* Define bug-free software *)
+Definition bug_existence_problem : Prop :=
+  (exists s, decides_bug s) -> False.
 
-Theorem BugExistence : forall s : Software, ~ BugFree s -> exists b : Software, Bug b.
+Definition bug_existence_problem' : Prop :=
+  forall s, decides_bug s -> False.
+
+Theorem statements_equivalent_bug_existence :
+  bug_existence_problem <-> bug_existence_problem'.
 Proof.
-  intros s H. (* Introduce s and the hypothesis H *)
-  exists s. (* We can simply choose the software itself as the bug *)
-  unfold BugFree in H. (* Unfold the definition of BugFree *)
-  apply H. (* Apply the hypothesis H, which states that s is not bug-free *)
+  unfold bug_existence_problem, bug_existence_problem'; split; intros.
+  - exact (H (ex_intro decides_bug s H0)).
+  - destruct H0.
+    exact (H x H0).
 Qed.
 ```
+
+## Coq Implementation Explained
+$Software$ represents the type of software. $decides\\_bug$ is a predicate that determines whether a given software has bugs. $bug\\_existence\\_problem$ is a proposition stating that it's impossible to decide whether any software has bugs. $bug\\_existence\\_problem'$ is an equivalent formulation of $bug\\_existence\\_problem$ using universal quantification. The $statements\\_equivalent\\_bug\\_existence$ theorem proves the equivalence between the two formulations of the bug existence problem. Diagonalization arugment is used in a manner of speaking. While the Coq implementation does not involve constructing a diagonal argument explicitly, the concept of undecidability and the impossibility of resolving certain questions within formal systems are fundamental to both the Diagonalization argument and the propositions presented.
 
 ## Conclusion:
 This conjecture aligns with the essence of the Halting Problem, indicating that it is impossible to guarantee the absence of bugs and vulnerabilities in any non-trivial software system.
