@@ -1,6 +1,6 @@
 # The Faulting Problem
 
-# Conjecture:
+## Conjecture:
 For any software system $S$, there exists a set $B$ of bugs and vulnerabilities such that $B$ is non-empty and $S$ cannot function without at least one element from $B$ present.
 
 
@@ -24,5 +24,5 @@ Hence, $S$ cannot be completely bug-free, and there must exist at least one bug 
 
 Mathematically, this can be expressed as: $∀S, ∃B$ such that $B=\\{\\}$ and $S$ cannot function without $B$.
 
-# Conclusion:
+## Conclusion:
 This conjecture aligns with the essence of the Halting Problem, indicating that it is impossible to guarantee the absence of bugs and vulnerabilities in any non-trivial software system.
