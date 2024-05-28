@@ -33,7 +33,8 @@ Qed.
 Definition bug_free (s : Software) : Prop :=
   forall i, ~ B s i.
 
-(* Main theorem stating that if a software system is not bug-free, there exists an input that reveals a bug *)
+(* Main theorem stating that if a software system is not bug-free,
+        there exists an input that reveals a bug *)
 Theorem bug_existence_theorem :
   forall s : Software,
     ~ bug_free s -> exists i : Input, B s i.
@@ -48,4 +49,18 @@ Proof.
   apply contra.
   exists i.
   exact Hbug.
+Qed.
+
+(* Combined proof that integrates the two results *)
+Theorem combined_bug_existence_proof :
+  (forall s : Software, ~ bug_free s -> exists i : Input, B s i) /\
+  (bug_existence_problem <-> bug_existence_problem').
+Proof.
+  split.
+  - (* Part 1: Prove bug_existence_theorem *)
+    intros s H.
+    apply bug_existence_theorem.
+    exact H.
+  - (* Part 2: Prove statements_equivalent_bug_existence *)
+    apply statements_equivalent_bug_existence.
 Qed.
