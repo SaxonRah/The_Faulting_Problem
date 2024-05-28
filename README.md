@@ -61,7 +61,8 @@ Qed.
 Definition bug_free (s : Software) : Prop :=
   forall i, ~ B s i.
 
-(* Main theorem stating that if a software system is not bug-free, there exists an input that reveals a bug *)
+(* Main theorem stating that if a software system is not bug-free,
+        there exists an input that reveals a bug *)
 Theorem bug_existence_theorem :
   forall s : Software,
     ~ bug_free s -> exists i : Input, B s i.
