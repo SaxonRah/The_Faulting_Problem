@@ -94,57 +94,8 @@ Proof.
 Qed.
 ```
 
-### Interpretation of the Faulting Problem
-The Faulting Problem conjecture and its accompanying proofs delve into the inherent complexities and limitations of ensuring a completely bug-free software system.
-
-#### Conjecture
-- **Premise:** Every software system $S$ has at least one input $I$ that causes unexpected or unintended behavior, indicating the presence of bugs or vulnerabilities.
-- **Assumption:** Suppose $S$ is completely free of bugs and vulnerabilities.
-- **Representation:** $S$ can be modeled as a function $F$ mapping inputs $I$ to outputs $O$ $F: I \to O$.
-- **Implication:** If $S$ is truly bug-free, the set $B$ of all possible bugs and vulnerabilities is empty $B = \emptyset$.
-- **Complexity:** The space of possible inputs $I$ is vast, often infinite.
-- **Halting Problem Connection:** There exist inputs $I$ for which it is undecidable whether $F$ will halt, suggesting that even in a bug-free system, some inputs may cause unexpected states.
-- **Conclusion:** There must be at least one input $I$ causing $F$ to exhibit unexpected behavior, implying that $S$ cannot be entirely bug-free.
-
-#### Coq Implementation and Proofs
-##### Definitions and Parameters
-- **Software:** Represented as a type `Software`.
-- **Inputs:** Represented as a type `Input`.
-- **Bug Predicate:** `B` is a predicate indicating the presence of a bug for a given software and input (`B : Software -> Input -> Prop`).
-- **Decidability Predicate:** `decides_bug` indicates whether it is possible to decide if a software has bugs.
-##### Problem Definitions
-- **bug_existence_problem:** If there exists a software system where deciding bugs is possible, then this leads to a contradiction.
-- **bug_existence_problem':** For any software system, if deciding bugs is possible, then this leads to a contradiction.
-- **Equivalence Proof:** Proves that `bug_existence_problem` and `bug_existence_problem'` are logically equivalent.
-##### Main Theorem
-- **bug_free Definition:** A software system `s` is bug-free if for all inputs `i`, there are no bugs (`bug_free (s : Software) : Prop := forall i, ~ B s i`).
-- **bug_existence_theorem:** If a software system `s` is not bug-free, then there exists at least one input `i` such that `i` reveals a bug in `s`.
-
-#### Detailed Analysis
-1. **Equivalence Proof:**
-   - Demonstrates that both formulations of the bug existence problem (`bug_existence_problem` and `bug_existence_problem'`) assert the impossibility of deciding whether any software has bugs.
-   - Shows that these formulations are logically equivalent, reinforcing the undecidability of bug detection in software systems.
-2. **Main Theorem:**
-   - States that if a software system is not bug-free, then there must exist an input that reveals a bug.
-   - This theorem focuses on the practical aspect of bug existence rather than their decidability.
-3. **`decides_bug` Predicate:**
-   - Indicates whether a method can decide if a given software has bugs.
-   - It should be reinterpreted to accurately reflect the decision-making process regarding the presence of bugs.
-4. **Revised Definitions:**
-   - Redefine `decides_bug` to ensure it captures the intended logic without contradictions.
-   - Clarify that `decides_bug` relates to the decidability of bug presence, not the actual presence of bugs.
-
-#### Explanation
-- **`decides_bug` Predicate:** Represents the ability to decide the presence of bugs, indicating the decidability aspect.
-- **Equivalence Proof:** Confirms that the problem of deciding bug presence is undecidable.
-- **bug_free Definition and Main Theorem:** Defines a bug-free system and asserts that non-bug-free systems must have inputs that reveal bugs.
-
-### How They Relate
-- The equivalence proof addresses the theoretical undecidability of bug detection.
-- The main theorem addresses the practical existence of bugs in non-bug-free systems.
-
 ### Conclusion
-The Faulting Problem conjecture and its formalization in Coq align with the essence of the Halting Problem. They suggest that achieving a completely bug-free software system is impossible due to the inherent complexity and vast input space. The proofs and definitions underscore the limitations of software correctness and the inevitability of bugs, reinforcing the notion that absolute correctness in software development is unattainable.
+The Faulting Problem, akin to the classic Halting Problem, emphasizes the inherent complexity in determining whether a given software system is devoid of faults. Analogous to the Halting Problem's focus on ascertaining if a Turing machine will halt or run indefinitely on a given input, the Faulting Problem centers on the infeasibility of devising an algorithm capable of accurately detecting all faults within a software system. Despite advancements in software engineering methodologies, such as formal verification and rigorous testing, the Faulting Problem remains a quintessential challenge. It highlights the intrinsic limitations of computational systems and underscores the need for robust techniques to manage and mitigate software defects. This perspective underscores the critical importance of acknowledging and managing software defects rather than aiming for an unattainable ideal of bug-free software. By embracing this reality, software developers and engineers can adopt more pragmatic strategies for ensuring the reliability, security, and resilience of software systems in the face of inevitable bugs and errors.
 
 ## LICENSE (Sorry, it's required).
 Obviously mathematical formulas cannot be copyrighted.
